@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* styles.scss */
+
+.mat-snack-bar-container {
+  background-color: #323232; // dark background
+  color: white;
+  font-size: 14px;
+  border-radius: 6px;
+  text-align: center;
+  justify-content: center;
+}
+
+.mat-simple-snackbar-action {
+  color: #ffc107; // yellow "Close" button
+}

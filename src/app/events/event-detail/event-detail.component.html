@@ -1,0 +1,21 @@
+<div class="event-detail-container">
+  <h2>Event Details</h2>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ event.title }}</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p><strong>Description:</strong> {{ event.description }}</p>
+      <p><strong>Date:</strong> {{ event.date }}</p>
+      <p><strong>User ID:</strong> {{ event.userId }}</p>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button mat-stroked-button color="primary" (click)="goBackToList()">
+        Back to Event List
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

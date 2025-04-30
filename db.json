@@ -1,0 +1,33 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "email": "test@example.com",
+      "password": "password123"
+    },
+    {
+      "id": "199d",
+      "email": "ASD",
+      "password": "DSA"
+    },
+    {
+      "id": "5cbf",
+      "email": "ashq",
+      "password": "123"
+    }
+  ],
+  "events": [
+    {
+      "title": "Angular Meetup",
+      "description": "A meetup to discuss Angular 16",
+      "date": "2025-05-10",
+      "id": "1"
+    },
+    {
+      "title": "Ashfak King",
+      "description": "Hello MF",
+      "date": "2000-06-10",
+      "id": "56a8abea-26e0-4825-925b-47b02a28d0cc"
+    }
+  ]
+}

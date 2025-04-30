@@ -1,0 +1,41 @@
+<div class="login-container">
+  <h2>Login</h2>
+
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email" />
+      <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+        Email is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password" type="password" />
+      <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+        Password is required
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Loading spinner shown only while loading -->
+    <div *ngIf="loading" class="spinner-container">
+      <mat-spinner diameter="30"></mat-spinner>
+    </div>
+
+    <!-- Disable button while loading or invalid -->
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="loading || loginForm.invalid"
+    >
+      Login
+    </button>
+  </form>
+
+  <p>
+    Don't have an account?
+    <a [routerLink]="['/auth/register']">Register Here</a>
+  </p>
+</div>
