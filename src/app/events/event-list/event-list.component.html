@@ -1,5 +1,8 @@
 <div class="event-list-container">
-  <h2 class="welcome-text">Welcome, {{ 'User' }}</h2>
+  <div class="top-bar">
+    <h2 class="welcome-text">Welcome, {{ userName }}</h2>
+    <button mat-stroked-button color="warn" (click)="logout()">Logout</button>
+  </div>
 
   <div class="header-actions">
     <button mat-raised-button color="primary" [routerLink]="['/events/new']">
@@ -7,8 +10,45 @@
     </button>
   </div>
 
+  <!-- Filters -->
+  <div class="filters-container">
+    <input
+      type="text"
+      placeholder="Search by title or description"
+      [(ngModel)]="searchQuery"
+      (input)="filterEvents()"
+      class="search-input"
+    />
+
+    <select
+      [(ngModel)]="selectedFilter"
+      (change)="filterEvents()"
+      class="filter-dropdown"
+    >
+      <option value="all">All Events</option>
+      <option value="past">Past Events</option>
+      <option value="upcoming">Upcoming Events</option>
+    </select>
+
+    <select
+      [(ngModel)]="selectedSort"
+      (change)="filterEvents()"
+      class="sort-dropdown"
+    >
+      <option value="dateAsc">Sort by Date (Ascending)</option>
+      <option value="dateDesc">Sort by Date (Descending)</option>
+      <option value="titleAsc">Sort by Title (Ascending)</option>
+      <option value="titleDesc">Sort by Title (Descending)</option>
+    </select>
+  </div>
+
+  <!-- Events Grid -->
   <div class="events-grid">
-    <div *ngFor="let event of events" class="event-card">
+    <div *ngIf="filteredEvents.length === 0" class="no-events-msg">
+      <p>No events created.</p>
+    </div>
+
+    <div *ngFor="let event of filteredEvents" class="event-card">
       <mat-card>
         <mat-card-header>
           <mat-card-title>{{ event.title }}</mat-card-title>

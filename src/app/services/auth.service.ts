@@ -1,6 +1,7 @@
+// src/app/services/auth.service.ts
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { map, Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -10,22 +11,40 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  // Login - Search user by email and check password
-  // login(email: string, password: string): Observable<any> {
-  //   return this.http.get<any[]>(
-  //     `${this.apiUrl}?email=${email}&password=${password}`
-  //   );
-  //   // GET /users?email=someone@example.com&password=123
-  // }
-
   // Check if email exists
   checkEmail(email: string): Observable<any> {
     return this.http.get<any[]>(`${this.apiUrl}?email=${email}`);
-    // GET /users?email=someone@example.com
   }
 
   // Register - Create new user
-  register(email: string, password: string): Observable<any> {
-    return this.http.post<any>(this.apiUrl, { email, password });
+  register(name: string, email: string, password: string): Observable<any> {
+    return this.http.post<any>(this.apiUrl, { name, email, password });
+  }
+
+  // Login - Authenticate user and store token
+  login(email: string, password: string): Observable<any> {
+    return this.http
+      .get<any[]>(`${this.apiUrl}?email=${email}&password=${password}`)
+      .pipe(
+        map((users) => {
+          if (users.length > 0) {
+            const user = users[0];
+            localStorage.setItem("token", user.email); // Simple token for this example
+            return user;
+          }
+          throw new Error("Invalid credentials");
+        })
+      );
+  }
+
+  // Logout - Clear the token
+  logout(): void {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userEmail");
+  }
+
+  // Check login status
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem("token");
   }
 }

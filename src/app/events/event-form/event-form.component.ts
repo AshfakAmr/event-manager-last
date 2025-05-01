@@ -1,3 +1,4 @@
+// src/app/components/event-form/event-form.component.ts
 import { Component, OnInit } from "@angular/core";
 import {
   FormBuilder,
@@ -8,6 +9,7 @@ import {
 import { ActivatedRoute, Router } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { EventService, Event } from "../../services/event.service";
+import { AuthService } from "../../services/auth.service";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
@@ -29,17 +31,24 @@ export class EventFormComponent implements OnInit {
   eventForm!: FormGroup;
   isEditMode = false;
   eventId!: string;
-  isLoading = false; // Loading state
-  errorMessage: string | null = null; // For error messages
+  isLoading = false;
+  errorMessage: string | null = null;
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private eventService: EventService
+    private eventService: EventService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    // Check if user is authenticated
+    if (!this.authService.isAuthenticated()) {
+      this.router.navigate(["/auth/login"]); // Redirect to login if not authenticated
+      return;
+    }
+
     this.eventForm = this.fb.group({
       title: ["", Validators.required],
       description: ["", Validators.required],
@@ -51,60 +60,73 @@ export class EventFormComponent implements OnInit {
       if (id) {
         this.isEditMode = true;
         this.eventId = id;
-        this.eventService.getEventById(id).subscribe(
-          (event) => {
-            this.eventForm.patchValue({
-              title: event.title,
-              description: event.description,
-              date: event.date,
-            });
-          },
-          (error) => {
-            this.errorMessage = "Error fetching event details.";
-          }
-        );
+        this.loadEvent(id);
       }
     });
+  }
+
+  private loadEvent(id: string): void {
+    this.isLoading = true;
+    this.eventService.getEventById(id).subscribe(
+      (event) => {
+        this.eventForm.patchValue({
+          title: event.title,
+          description: event.description,
+          date: event.date,
+        });
+        this.isLoading = false;
+      },
+      () => {
+        this.errorMessage = "Error fetching event details.";
+        this.isLoading = false;
+      }
+    );
   }
 
   onSubmit(): void {
     if (this.eventForm.invalid) return;
 
+    this.isLoading = true;
+
     const formValue = this.eventForm.value;
-    this.isLoading = true; // Show loading state
 
     if (this.isEditMode) {
       this.eventService.updateEvent(this.eventId, formValue).subscribe(
-        () => {
-          this.isLoading = false;
-          this.router.navigate(["/events"]);
-        },
-        (error) => {
-          this.isLoading = false;
-          this.errorMessage = "Error updating event.";
-        }
+        () => this.redirectToList(),
+        () => this.showError("Error updating event.")
       );
     } else {
+      const email = localStorage.getItem("email");
+      const userEmail = localStorage.getItem("token");
+      if (!userEmail) {
+        this.showError("User not logged in.");
+        return;
+      }
+
       const newEvent: Event = {
+        id: crypto.randomUUID(),
+        userId: email,
         ...formValue,
-        id: crypto.randomUUID(), // Optional: your backend may generate this
-        userId: "1", // TEMP: Replace with real user ID once auth is set
       };
 
       this.eventService.createEvent(newEvent).subscribe(
-        () => {
-          this.isLoading = false;
-          this.router.navigate(["/events"]);
-        },
-        (error) => {
-          this.isLoading = false;
-          this.errorMessage = "Error creating event.";
-        }
+        () => this.redirectToList(),
+        () => this.showError("Error creating event.")
       );
     }
   }
 
   goBackToList(): void {
     this.router.navigate(["/events"]);
+  }
+
+  private redirectToList(): void {
+    this.isLoading = false;
+    this.router.navigate(["/events"]);
+  }
+
+  private showError(message: string): void {
+    this.isLoading = false;
+    this.errorMessage = message;
   }
 }

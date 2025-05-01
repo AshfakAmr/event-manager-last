@@ -3,22 +3,50 @@
 
   <form [formGroup]="registerForm" (ngSubmit)="register()">
     <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" />
+      <mat-error *ngIf="registerForm.get('name')?.hasError('required')">
+        Name is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
       <mat-label>Email</mat-label>
       <input matInput formControlName="email" type="email" />
       <mat-error *ngIf="registerForm.get('email')?.hasError('required')">
         Email is required
       </mat-error>
+      <mat-error *ngIf="registerForm.get('email')?.hasError('email')">
+        Enter a valid email address
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>Password</mat-label>
-      <input matInput formControlName="password" type="password" />
+      <input
+        matInput
+        formControlName="password"
+        [type]="passwordVisible ? 'text' : 'password'"
+      />
+      <button
+        type="button"
+        mat-icon-button
+        (click)="togglePasswordVisibility()"
+        matSuffix
+      >
+        <mat-icon>
+          {{ passwordVisible ? "visibility_off" : "visibility" }}
+        </mat-icon>
+      </button>
+
       <mat-error *ngIf="registerForm.get('password')?.hasError('required')">
         Password is required
       </mat-error>
+      <mat-error *ngIf="registerForm.get('password')?.hasError('minlength')">
+        Password must be at least 8 characters long
+      </mat-error>
     </mat-form-field>
 
-    <!-- Spinner while loading -->
     <div *ngIf="loading" class="spinner-container">
       <mat-spinner diameter="30"></mat-spinner>
     </div>

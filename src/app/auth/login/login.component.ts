@@ -12,6 +12,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
 import { CommonModule } from "@angular/common";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatIconModule } from "@angular/material/icon"; // Add this import
 
 @Component({
   selector: "app-login",
@@ -26,11 +27,13 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
     MatButtonModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
+    MatIconModule,
   ],
 })
 export class LoginComponent {
   loginForm: FormGroup;
   loading: boolean = false;
+  passwordVisible: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -39,9 +42,20 @@ export class LoginComponent {
     private snackBar: MatSnackBar
   ) {
     this.loginForm = this.fb.group({
-      email: ["", Validators.required],
-      password: ["", Validators.required],
+      email: [
+        "",
+        [Validators.required, Validators.email], // Email format validation
+      ],
+      password: [
+        "",
+        [Validators.required, Validators.minLength(8)], // Password length validation
+      ],
     });
+  }
+
+  // Method to toggle the visibility of the password
+  togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible;
   }
 
   login() {
@@ -66,8 +80,9 @@ export class LoginComponent {
           const user = users[0];
           if (user.password === password) {
             // ✅ Set token in localStorage to pass AuthGuard
-            localStorage.setItem("token", "mock-token"); // You can store a real token or user id here
-
+            localStorage.setItem("token", "mock-token");
+            localStorage.setItem("name", user.name);
+            localStorage.setItem("email", user.email);
             this.snackBar.open("Logged in successfully!", "Close", {
               duration: 3000,
               horizontalPosition: "right",

@@ -7,7 +7,7 @@ export interface Event {
   title: string;
   description: string;
   date: string;
-  userId: string;
+  userId: string; // This is where the user's email is stored in the event
 }
 
 @Injectable({
@@ -36,5 +36,10 @@ export class EventService {
 
   deleteEvent(id: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
+
+  // Fetch events for a particular user based on their email (which is stored in 'userId' in events)
+  getUserEvents(userEmail: string): Observable<Event[]> {
+    return this.http.get<Event[]>(`${this.baseUrl}?userId=${userEmail}`);
   }
 }

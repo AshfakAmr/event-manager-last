@@ -2,32 +2,44 @@
   "users": [
     {
       "id": "1",
+      "name": "Ashfak Ys",
       "email": "test@example.com",
       "password": "password123"
     },
     {
-      "id": "199d",
-      "email": "ASD",
-      "password": "DSA"
+      "id": "5cbf",
+      "name": "Ashfak",
+      "email": "ashq@gmail.com",
+      "password": "123456789"
     },
     {
-      "id": "5cbf",
-      "email": "ashq",
-      "password": "123"
+      "id": "502a",
+      "name": "Ashg",
+      "email": "123@123.com",
+      "password": "12121212"
     }
   ],
   "events": [
     {
-      "title": "Angular Meetup",
-      "description": "A meetup to discuss Angular 16",
-      "date": "2025-05-10",
-      "id": "1"
+      "id": "de0abc67-c5f7-4e98-9c0c-067bf153538f",
+      "userId": "ashq@gmail.com",
+      "title": "qwer",
+      "description": "qwer",
+      "date": "1211-12-12"
     },
     {
-      "title": "Ashfak King",
-      "description": "Hello MF",
-      "date": "2000-06-10",
-      "id": "56a8abea-26e0-4825-925b-47b02a28d0cc"
+      "id": "34b0bdbe-37d0-4497-a803-9baa3925febf",
+      "userId": "ashq@gmail.com",
+      "title": "advf",
+      "description": "afsd",
+      "date": "2222-12-12"
+    },
+    {
+      "id": "1e4d6cea-d01a-44cb-838f-d4ef52fb8dff",
+      "userId": "123@123.com",
+      "title": "qqq",
+      "description": "qqq",
+      "date": "1111-12-12"
     }
   ]
 }

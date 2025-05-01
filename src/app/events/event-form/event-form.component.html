@@ -1,52 +1,43 @@
 <div class="event-form-container">
-  <h2>{{ isEditMode ? "Edit Event" : "Create Event" }}</h2>
-
-  <!-- Back button -->
-  <button mat-button color="accent" (click)="goBackToList()">
-    ← Back to Events
-  </button>
+  <h2>{{ isEditMode ? 'Edit Event' : 'Create New Event' }}</h2>
 
   <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
-    <mat-form-field appearance="fill">
-      <mat-label>Event Title</mat-label>
-      <input matInput formControlName="title" />
-      <mat-error *ngIf="eventForm.controls['title'].hasError('required')">
-        Title is required
-      </mat-error>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" required />
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" class="full-width">
       <mat-label>Description</mat-label>
-      <input matInput formControlName="description" />
-      <mat-error *ngIf="eventForm.controls['description'].hasError('required')">
-        Description is required
-      </mat-error>
+      <textarea matInput formControlName="description" required></textarea>
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" class="full-width">
       <mat-label>Date</mat-label>
-      <input matInput formControlName="date" type="date" />
-      <mat-error *ngIf="eventForm.controls['date'].hasError('required')">
-        Date is required
-      </mat-error>
+      <input matInput type="date" formControlName="date" required />
     </mat-form-field>
 
-    <!-- Error message -->
     <div *ngIf="errorMessage" class="error-message">
       {{ errorMessage }}
     </div>
 
-    <!-- Submit button -->
-    <button
-      mat-raised-button
-      color="primary"
-      type="submit"
-      [disabled]="isLoading"
-    >
-      {{ isEditMode ? "Update Event" : "Create Event" }}
-    </button>
-
-    <!-- Loading indicator -->
-    <div *ngIf="isLoading" class="loading-spinner">Saving...</div>
+    <div class="buttons">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="isLoading"
+      >
+        {{ isEditMode ? 'Update' : 'Create' }}
+      </button>
+      <button
+        mat-stroked-button
+        color="accent"
+        type="button"
+        (click)="goBackToList()"
+      >
+        Cancel
+      </button>
+    </div>
   </form>
 </div>

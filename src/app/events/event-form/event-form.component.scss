@@ -45,3 +45,22 @@ button[color="accent"] {
   font-size: 1.2em;
   color: #007bff;
 }
+.event-form-container {
+  max-width: 500px;
+  margin: auto;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.error-message {
+  color: red;
+  margin: 10px 0;
+}
+
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}

@@ -1,10 +1,9 @@
-import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
 import {
   FormBuilder,
   FormGroup,
-  ReactiveFormsModule,
   Validators,
+  ReactiveFormsModule,
 } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatInputModule } from "@angular/material/input";
@@ -12,6 +11,8 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
 import { Router, RouterModule } from "@angular/router";
 import { AuthService } from "../../services/auth.service";
+import { CommonModule } from "@angular/common";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
   selector: "app-register",
@@ -25,12 +26,14 @@ import { AuthService } from "../../services/auth.service";
     MatInputModule,
     MatButtonModule,
     MatSnackBarModule,
-    MatProgressSpinnerModule, // ✅ Add this
+    MatProgressSpinnerModule,
+    MatIconModule,
   ],
 })
 export class RegisterComponent {
   registerForm: FormGroup;
-  loading: boolean = false; // ✅ New loading variable
+  loading: boolean = false;
+  passwordVisible: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -39,15 +42,16 @@ export class RegisterComponent {
     private snackBar: MatSnackBar
   ) {
     this.registerForm = this.fb.group({
-      email: ["", Validators.required],
-      password: ["", Validators.required],
+      name: ["", Validators.required],
+      email: ["", [Validators.required, Validators.email]],
+      password: ["", [Validators.required, Validators.minLength(8)]], // Changed from 6 to 8
     });
   }
 
   register() {
-    this.loading = true; // Start loading when clicked
+    this.loading = true;
+    const { name, email, password } = this.registerForm.value;
 
-    const { email, password } = this.registerForm.value;
     this.authService.checkEmail(email).subscribe(
       (users) => {
         if (users.length > 0) {
@@ -56,9 +60,9 @@ export class RegisterComponent {
             horizontalPosition: "right",
             verticalPosition: "top",
           });
-          this.loading = false; // ✅ Stop loading
+          this.loading = false;
         } else {
-          this.authService.register(email, password).subscribe(
+          this.authService.register(name, email, password).subscribe(
             () => {
               this.snackBar.open(
                 "Registered successfully! Redirecting to login...",
@@ -70,17 +74,21 @@ export class RegisterComponent {
                 }
               );
               this.router.navigate(["/auth/login"]);
-              this.loading = false; // ✅ Stop loading
+              this.loading = false;
             },
             () => {
-              this.loading = false; // Error case stop loading
+              this.loading = false;
             }
           );
         }
       },
       () => {
-        this.loading = false; // Error case stop loading
+        this.loading = false;
       }
     );
+  }
+
+  togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible;
   }
 }

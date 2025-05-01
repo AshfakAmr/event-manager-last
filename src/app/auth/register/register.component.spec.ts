@@ -36,20 +36,21 @@ export class RegisterComponent {
     private snackBar: MatSnackBar
   ) {
     this.registerForm = this.fb.group({
+      name: ["", Validators.required],
       email: ["", Validators.required],
       password: ["", Validators.required],
     });
   }
 
   register() {
-    const { email, password } = this.registerForm.value;
+    const { name, email, password } = this.registerForm.value;
     this.authService.checkEmail(email).subscribe((users) => {
       if (users.length > 0) {
         this.snackBar.open("User already registered!", "Close", {
           duration: 3000,
         });
       } else {
-        this.authService.register(email, password).subscribe(() => {
+        this.authService.register(name, email, password).subscribe(() => {
           this.snackBar.open(
             "Registered successfully! Redirecting to login...",
             "Close",
