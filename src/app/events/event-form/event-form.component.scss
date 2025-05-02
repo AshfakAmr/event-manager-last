@@ -23,35 +23,13 @@ form {
   width: 100%;
 }
 
-button[type="submit"] {
-  align-self: center;
+.form-button {
   padding: 0.6rem 2rem;
   font-weight: 600;
   font-size: 16px;
-}
-button[color="accent"] {
-  margin-bottom: 1rem;
-  align-self: flex-start;
-  font-weight: 500;
-}
-
-.error-message {
-  color: red;
-  margin-top: 10px;
-}
-
-.loading-spinner {
-  margin-top: 10px;
-  font-size: 1.2em;
-  color: #007bff;
-}
-.event-form-container {
-  max-width: 500px;
-  margin: auto;
-}
-
-.full-width {
-  width: 100%;
+  min-width: 120px;
+  height: 48px;
+  text-transform: none;
 }
 
 .error-message {
@@ -59,8 +37,21 @@ button[color="accent"] {
   margin: 10px 0;
 }
 
+.loading-spinner {
+  margin-top: 10px;
+  font-size: 1.2em;
+  color: #007bff;
+}
+
+.event-form-container {
+  max-width: 500px;
+  margin: auto;
+}
+
 .buttons {
   margin-top: 20px;
   display: flex;
+  flex-direction: row;
   gap: 10px;
+  justify-content: center;
 }

@@ -27,14 +27,17 @@
         color="primary"
         type="submit"
         [disabled]="isLoading"
+        class="form-button"
       >
         {{ isEditMode ? 'Update' : 'Create' }}
       </button>
+
       <button
-        mat-stroked-button
+        mat-raised-button
         color="accent"
         type="button"
         (click)="goBackToList()"
+        class="form-button"
       >
         Cancel
       </button>

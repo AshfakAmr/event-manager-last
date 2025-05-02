@@ -17,6 +17,12 @@
       "name": "Ashg",
       "email": "123@123.com",
       "password": "12121212"
+    },
+    {
+      "id": "2313",
+      "name": "Ashfak",
+      "email": "ash@123.gmail.com",
+      "password": "Ashowoff"
     }
   ],
   "events": [
@@ -40,6 +46,20 @@
       "title": "qqq",
       "description": "qqq",
       "date": "1111-12-12"
+    },
+    {
+      "id": "a06f0810-4256-4713-8b73-d4624b530faf",
+      "userId": "123@123.com",
+      "title": "dsada",
+      "description": "adgdag",
+      "date": "1122-12-12"
+    },
+    {
+      "id": "3092023b-bfbd-42f7-90b2-79c6642b3802",
+      "userId": "123@123.com",
+      "title": "advfad",
+      "description": "31231",
+      "date": "4124-03-12"
     }
   ]
 }

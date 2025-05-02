@@ -14,7 +14,8 @@ export interface Event {
   providedIn: "root",
 })
 export class EventService {
-  private baseUrl = "http://localhost:3000/events";
+  private baseUrl = "https://event-mockdata.onrender.com";
+  // "http://localhost:3000/events";
 
   constructor(private http: HttpClient) {}
 
