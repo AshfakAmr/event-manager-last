@@ -46,14 +46,10 @@ export class LoginComponent {
         "",
         [Validators.required, Validators.email], // Email format validation
       ],
-      password: [
-        "",
-        [Validators.required, Validators.minLength(8)], // Password length validation
-      ],
+      password: ["", [Validators.required, Validators.minLength(8)]],
     });
   }
 
-  // Method to toggle the visibility of the password
   togglePasswordVisibility() {
     this.passwordVisible = !this.passwordVisible;
   }
@@ -79,7 +75,6 @@ export class LoginComponent {
         } else {
           const user = users[0];
           if (user.password === password) {
-            // ✅ Set token in localStorage to pass AuthGuard
             localStorage.setItem("token", "mock-token");
             localStorage.setItem("name", user.name);
             localStorage.setItem("email", user.email);

@@ -7,6 +7,7 @@ import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from "@angular/material/button";
 import { Router, RouterModule } from "@angular/router";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { Subscription } from "rxjs";
 
 @Component({
   standalone: true,
@@ -29,6 +30,7 @@ export class EventListComponent implements OnInit {
   searchQuery: string = "";
   selectedFilter: string = "all";
   selectedSort: string = "dateAsc";
+  private eventSubscription!: Subscription;
 
   constructor(
     private eventService: EventService,
@@ -38,9 +40,8 @@ export class EventListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Check if user is authenticated
     if (!this.authService.isAuthenticated()) {
-      this.router.navigate(["/auth/login"]); // Redirect to login if not authenticated
+      this.router.navigate(["/auth/login"]);
       return;
     }
 
@@ -48,9 +49,13 @@ export class EventListComponent implements OnInit {
     this.userName = localStorage.getItem("name") || "";
 
     if (this.userEmail) {
-      // Fetch events for the logged-in user's email (userId)
-      this.eventService.getUserEvents(this.userEmail).subscribe((data) => {
-        console.log("Fetched events for user:", data, this.userEmail);
+      this.eventService
+        .getUserEvents(this.userEmail)
+        .subscribe((userEvents) => {
+          this.eventService["eventsSubject"].next(userEvents);
+        });
+
+      this.eventSubscription = this.eventService.events$.subscribe((data) => {
         this.events = data;
         this.filterEvents();
       });
@@ -105,8 +110,7 @@ export class EventListComponent implements OnInit {
   deleteEvent(id: string): void {
     if (confirm("Are you sure you want to delete this event?")) {
       this.eventService.deleteEvent(id).subscribe(() => {
-        this.events = this.events.filter((event) => event.id !== id);
-        this.filterEvents();
+        this.snackBar.open("Event deleted", "Close", { duration: 2000 });
       });
     }
   }
@@ -120,5 +124,11 @@ export class EventListComponent implements OnInit {
       verticalPosition: "top",
       panelClass: ["logout-toast"],
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.eventSubscription) {
+      this.eventSubscription.unsubscribe();
+    }
   }
 }

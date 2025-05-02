@@ -5,73 +5,7 @@
       "name": "Ashfak Ys",
       "email": "test@example.com",
       "password": "password123"
-    },
-    {
-      "id": "5cbf",
-      "name": "Ashfak",
-      "email": "ashq@gmail.com",
-      "password": "123456789"
-    },
-    {
-      "id": "502a",
-      "name": "Ashg",
-      "email": "123@123.com",
-      "password": "12121212"
-    },
-    {
-      "id": "2313",
-      "name": "Ashfak",
-      "email": "ash@123.gmail.com",
-      "password": "Ashowoff"
-    },
-    {
-      "id": "bc35",
-      "name": "Ash",
-      "email": "ash@gmail.ccom",
-      "password": "aaaaaaaa"
-    },
-    {
-      "id": "bb9b",
-      "name": "ADA",
-      "email": "Ash@gmail.com",
-      "password": "000000000"
     }
   ],
-  "events": [
-    {
-      "id": "de0abc67-c5f7-4e98-9c0c-067bf153538f",
-      "userId": "ashq@gmail.com",
-      "title": "qwer",
-      "description": "qwer",
-      "date": "1211-12-12"
-    },
-    {
-      "id": "34b0bdbe-37d0-4497-a803-9baa3925febf",
-      "userId": "ashq@gmail.com",
-      "title": "advf",
-      "description": "afsd",
-      "date": "2222-12-12"
-    },
-    {
-      "id": "1e4d6cea-d01a-44cb-838f-d4ef52fb8dff",
-      "userId": "123@123.com",
-      "title": "qqq",
-      "description": "qqq",
-      "date": "1111-12-12"
-    },
-    {
-      "id": "a06f0810-4256-4713-8b73-d4624b530faf",
-      "userId": "123@123.com",
-      "title": "dsada",
-      "description": "adgdag",
-      "date": "1122-12-12"
-    },
-    {
-      "id": "3092023b-bfbd-42f7-90b2-79c6642b3802",
-      "userId": "123@123.com",
-      "title": "advfad",
-      "description": "31231",
-      "date": "4124-03-12"
-    }
-  ]
+  "events": []
 }

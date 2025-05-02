@@ -1,59 +1,118 @@
-# EventManagerLast
+🗓️ Event Management System – Angular 19 (Standalone Components)
+Welcome! This is a Single Page Application (SPA) built using Angular 19 with standalone components, Angular Material, and RxJS. This project fulfills the assignment requirements for the Frontend Software Developer position at Platform Commons.
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.9.
+🚀 Live Demo
+🔗 Hosted Live Demo
+📹 Video Walkthrough
 
-## Development server
+📁 Project Structure & Approach
+✅ Built using the latest Angular 19 standalone component architecture – no traditional NgModules.
 
-To start a local development server, run:
+✅ Angular CLI used for scaffolding and Angular Material setup.
 
-```bash
-ng serve
-```
+✅ Features organized into auth and event domains.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+✅ Services use RxJS Subjects and HttpClient for reactive state and backend sync.
 
-## Code scaffolding
+✅ Clean and maintainable folder structure.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+🧰 Tech Stack
+Tech Purpose
+Angular 19 Frontend SPA with standalone arch
+Angular Material UI components & layout
+RxJS State & async handling
+JSON Server Mock backend for data persistence
+Angular Router SPA routing
+Reactive Forms Form handling & validation
+CSS Flex/Grid Responsive layout
 
-```bash
-ng generate component component-name
-```
+🔐 Features
+✅ Authentication
+User Registration & Login (Form validation)
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Route Guard to protect event routes
 
-```bash
-ng generate --help
-```
+Session stored in localStorage
 
-## Building
+🗓️ Event Management
+View all events in a card-based layout
 
-To build the project run:
+Create, edit, delete events with validation
 
-```bash
-ng build
-```
+View event details in a modal/card
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Search, filter, and sort events by title and date
 
-## Running unit tests
+📱 Responsive UI
+Clean Material UI design
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Mobile-first layout with Flex & Grid
 
-```bash
-ng test
-```
+Fully responsive across devices
 
-## Running end-to-end tests
+🔄 JSON Server (Mock Backend)
+Start JSON Server:
 
-For end-to-end (e2e) testing, run:
+json-server --watch db.json --port 3000
+Sample API routes:
+GET /users
 
-```bash
-ng e2e
-```
+POST /users
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+GET /events
 
-## Additional Resources
+POST /events
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+PUT /events/:id
+
+DELETE /events/:id
+
+🛠️ Installation & Setup
+
+1. Clone Repo
+
+   git clone https://github.com/your-username/event-manager-angular.git
+   cd event-manager-angular
+
+2. Install Dependencies
+
+   npm install
+
+3. Run JSON Server
+
+   npm run backend
+
+# or
+
+json-server --watch db.json --port 3000
+
+4. Run Angular App
+
+   ng serve
+   App will be live at: http://localhost:4200
+
+📌 Key Design Decisions
+Standalone Components: Used Angular 19's modern standalone feature to remove NgModules and simplify structure.
+
+RxJS for State: Leveraged Subjects and Observables for reactive UI updates without external state libraries.
+
+Lazy Loading: Routes are lazy-loaded and guarded using Angular Router's route-level guards.
+
+Angular Material: Ensures consistency and accessibility with Material UI standards.
+
+Responsiveness: Designed to look good across devices using Material Layout and Grid CSS.
+
+🧪 Future Enhancements
+Persistent Auth with JWT & real backend
+
+Pagination for events
+
+Role-based permissions
+
+Upload event image with preview
+
+📄 License
+This is a submission for the Platform Commons assignment and intended for evaluation only. All code is original and written by me.
+
+🤖 AI Assistance
+This project was built with independent effort and learning. However, guidance, explanations, and feedback were taken with the help of OpenAI's ChatGPT to better understand Angular 19’s latest standalone features, Angular Material components, and best practices in structuring and styling the application.

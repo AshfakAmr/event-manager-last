@@ -1,4 +1,3 @@
-// src/app/components/event-form/event-form.component.ts
 import { Component, OnInit } from "@angular/core";
 import {
   FormBuilder,
@@ -43,9 +42,8 @@ export class EventFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Check if user is authenticated
     if (!this.authService.isAuthenticated()) {
-      this.router.navigate(["/auth/login"]); // Redirect to login if not authenticated
+      this.router.navigate(["/auth/login"]);
       return;
     }
 
@@ -85,20 +83,26 @@ export class EventFormComponent implements OnInit {
 
   onSubmit(): void {
     if (this.eventForm.invalid) return;
-
     this.isLoading = true;
 
     const formValue = this.eventForm.value;
 
     if (this.isEditMode) {
       this.eventService.updateEvent(this.eventId, formValue).subscribe(
-        () => this.redirectToList(),
+        (updatedEvent) => {
+          const currentEvents = this.eventService["eventsSubject"].value;
+          const updatedList = currentEvents.map((event) =>
+            event.id === this.eventId ? { ...event, ...formValue } : event
+          );
+          this.eventService["eventsSubject"].next(updatedList);
+
+          this.redirectToList();
+        },
         () => this.showError("Error updating event.")
       );
     } else {
       const email = localStorage.getItem("email");
-      const userEmail = localStorage.getItem("token");
-      if (!userEmail) {
+      if (!email) {
         this.showError("User not logged in.");
         return;
       }
@@ -110,7 +114,12 @@ export class EventFormComponent implements OnInit {
       };
 
       this.eventService.createEvent(newEvent).subscribe(
-        () => this.redirectToList(),
+        () => {
+          const currentEvents = this.eventService["eventsSubject"].value;
+          this.eventService["eventsSubject"].next([...currentEvents, newEvent]);
+
+          this.redirectToList();
+        },
         () => this.showError("Error creating event.")
       );
     }
