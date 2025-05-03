@@ -38,5 +38,5 @@ export const routes: Routes = [
     component: EventFormComponent,
     canActivate: [AuthGuard],
   },
-  { path: "**", redirectTo: "auth/login" }, // Wildcard
+  { path: "**", redirectTo: "auth/login" },
 ];

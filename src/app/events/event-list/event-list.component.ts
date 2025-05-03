@@ -29,7 +29,7 @@ export class EventListComponent implements OnInit {
   userName: string = "";
   searchQuery: string = "";
   selectedFilter: string = "all";
-  selectedSort: string = "dateAsc";
+  selectedSort: string = "none";
   private eventSubscription!: Subscription;
 
   constructor(
@@ -102,15 +102,27 @@ export class EventListComponent implements OnInit {
       case "titleDesc":
         filtered.sort((a, b) => b.title.localeCompare(a.title));
         break;
+      case "none":
+      default:
+        filtered.reverse();
+        break;
     }
 
     this.filteredEvents = filtered;
   }
-
   deleteEvent(id: string): void {
+    console.log("DELETING IDD", id);
     if (confirm("Are you sure you want to delete this event?")) {
-      this.eventService.deleteEvent(id).subscribe(() => {
-        this.snackBar.open("Event deleted", "Close", { duration: 2000 });
+      this.eventService.deleteEvent(id).subscribe({
+        next: () => {
+          this.snackBar.open("Event deleted", "Close", { duration: 2000 });
+          this.filterEvents(); // Reapply filters
+        },
+        error: () => {
+          this.snackBar.open("Failed to delete event", "Close", {
+            duration: 2000,
+          });
+        },
       });
     }
   }

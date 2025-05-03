@@ -1,9 +1,9 @@
 🗓️ Event Management System – Angular 19 (Standalone Components)
 Welcome! This is a Single Page Application (SPA) built using Angular 19 with standalone components, Angular Material, and RxJS. This project fulfills the assignment requirements for the Frontend Software Developer position at Platform Commons.
 
-🚀 Live Demo
+🚀 Live Demo - https://eventmanagementtask.netlify.app/
+
 🔗 Hosted Live Demo
-📹 Video Walkthrough
 
 📁 Project Structure & Approach
 ✅ Built using the latest Angular 19 standalone component architecture – no traditional NgModules.
@@ -39,7 +39,7 @@ View all events in a card-based layout
 
 Create, edit, delete events with validation
 
-View event details in a modal/card
+View event details
 
 Search, filter, and sort events by title and date
 
@@ -101,15 +101,6 @@ Lazy Loading: Routes are lazy-loaded and guarded using Angular Router's route-le
 Angular Material: Ensures consistency and accessibility with Material UI standards.
 
 Responsiveness: Designed to look good across devices using Material Layout and Grid CSS.
-
-🧪 Future Enhancements
-Persistent Auth with JWT & real backend
-
-Pagination for events
-
-Role-based permissions
-
-Upload event image with preview
 
 📄 License
 This is a submission for the Platform Commons assignment and intended for evaluation only. All code is original and written by me.

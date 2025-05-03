@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { BehaviorSubject, Observable, tap } from "rxjs";
+import { BehaviorSubject, Observable, of, tap } from "rxjs";
+import { environment } from "../../environments/environment";
 
 export interface Event {
   id: string;
@@ -14,7 +15,7 @@ export interface Event {
   providedIn: "root",
 })
 export class EventService {
-  private baseUrl = "https://event-mockdata.onrender.com/events";
+  private baseUrl = environment.apiBaseUrlEvents;
 
   private eventsSubject = new BehaviorSubject<Event[]>([]);
   events$ = this.eventsSubject.asObservable();
@@ -41,11 +42,23 @@ export class EventService {
   }
 
   updateEvent(id: string, updated: Partial<Event>): Observable<Event> {
-    return this.http.put<Event>(`${this.baseUrl}/${id}`, updated).pipe(
-      tap((updatedEvent) => {
-        const currentEvents = this.eventsSubject.getValue();
+    const currentEvents = this.eventsSubject.getValue();
+    const existingEvent = currentEvents.find((e) => e.id === id);
+
+    if (!existingEvent) {
+      throw new Error("Event not found");
+    }
+
+    // Merge existing fields to avoid losing anything
+    const mergedUpdate: Event = {
+      ...existingEvent,
+      ...updated,
+    };
+
+    return this.http.put<Event>(`${this.baseUrl}/${id}`, mergedUpdate).pipe(
+      tap((updatedEventFromBackend) => {
         const updatedEvents = currentEvents.map((e) =>
-          e.id === id ? { ...e, ...updatedEvent } : e
+          e.id === id ? updatedEventFromBackend : e
         );
         this.eventsSubject.next(updatedEvents);
       })
@@ -53,10 +66,15 @@ export class EventService {
   }
 
   deleteEvent(id: string): Observable<void> {
+    if (!id) {
+      console.warn("Tried to delete an event with no ID!");
+      return of(void 0);
+    }
+
     return this.http.delete<void>(`${this.baseUrl}/${id}`).pipe(
       tap(() => {
-        const currentEvents = this.eventsSubject.getValue();
-        const updatedEvents = currentEvents.filter((e) => e.id !== id);
+        const currentEvents = this.eventsSubject.value;
+        const updatedEvents = currentEvents.filter((event) => event.id !== id);
         this.eventsSubject.next(updatedEvents);
       })
     );

@@ -12,6 +12,7 @@ import { AuthService } from "../../services/auth.service";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
+import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar"; // ✅ Import
 
 @Component({
   standalone: true,
@@ -24,6 +25,7 @@ import { MatButtonModule } from "@angular/material/button";
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatSnackBarModule, // ✅ Add MatSnackBarModule
   ],
 })
 export class EventFormComponent implements OnInit {
@@ -38,7 +40,8 @@ export class EventFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private eventService: EventService,
-    private authService: AuthService
+    private authService: AuthService,
+    private snackBar: MatSnackBar // ✅ Inject MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -88,18 +91,24 @@ export class EventFormComponent implements OnInit {
     const formValue = this.eventForm.value;
 
     if (this.isEditMode) {
-      this.eventService.updateEvent(this.eventId, formValue).subscribe(
-        (updatedEvent) => {
-          const currentEvents = this.eventService["eventsSubject"].value;
-          const updatedList = currentEvents.map((event) =>
-            event.id === this.eventId ? { ...event, ...formValue } : event
-          );
-          this.eventService["eventsSubject"].next(updatedList);
-
-          this.redirectToList();
-        },
-        () => this.showError("Error updating event.")
+      const existingEvent = this.eventService["eventsSubject"].value.find(
+        (event) => event.id === this.eventId
       );
+
+      if (!existingEvent) {
+        this.showError("Event not found.");
+        return;
+      }
+
+      this.eventService
+        .updateEvent(this.eventId, {
+          ...formValue,
+          userId: existingEvent.userId,
+        })
+        .subscribe({
+          next: () => this.redirectToList(),
+          error: () => this.showError("Error updating event."),
+        });
     } else {
       const email = localStorage.getItem("email");
       if (!email) {
@@ -113,15 +122,15 @@ export class EventFormComponent implements OnInit {
         ...formValue,
       };
 
-      this.eventService.createEvent(newEvent).subscribe(
-        () => {
-          const currentEvents = this.eventService["eventsSubject"].value;
-          this.eventService["eventsSubject"].next([...currentEvents, newEvent]);
-
+      this.eventService.createEvent(newEvent).subscribe({
+        next: () => {
+          this.snackBar.open("Event created successfully!", "Close", {
+            duration: 3000,
+          }); // ✅ Toast after creation
           this.redirectToList();
         },
-        () => this.showError("Error creating event.")
-      );
+        error: () => this.showError("Error creating event."),
+      });
     }
   }
 
