@@ -2,25 +2,39 @@
   <h2>{{ isEditMode ? 'Edit Event' : 'Create New Event' }}</h2>
 
   <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+    <!-- Title -->
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>Title</mat-label>
       <input matInput formControlName="title" required />
+      <mat-error *ngIf="eventForm.get('title')?.hasError('required')">
+        Title is required.
+      </mat-error>
     </mat-form-field>
 
+    <!-- Description -->
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>Description</mat-label>
       <textarea matInput formControlName="description" required></textarea>
+      <mat-error *ngIf="eventForm.get('description')?.hasError('required')">
+        Description is required.
+      </mat-error>
     </mat-form-field>
 
+    <!-- Date -->
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>Date</mat-label>
       <input matInput type="date" formControlName="date" required />
+      <mat-error *ngIf="eventForm.get('date')?.hasError('required')">
+        Date is required.
+      </mat-error>
     </mat-form-field>
 
+    <!-- Error Message -->
     <div *ngIf="errorMessage" class="error-message">
       {{ errorMessage }}
     </div>
 
+    <!-- Buttons -->
     <div class="buttons">
       <button
         mat-raised-button
