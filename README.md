@@ -92,15 +92,32 @@ json-server --watch db.json --port 3000
    App will be live at: http://localhost:4200
 
 📌 Key Design Decisions
-Standalone Components: Used Angular 19's modern standalone feature to remove NgModules and simplify structure.
+✅ Standalone Components
+Used Angular 19's modern standalone feature to eliminate the need for NgModules and simplify the project structure.
 
-RxJS for State: Leveraged Subjects and Observables for reactive UI updates without external state libraries.
+✅ RxJS for State Management & Async Handling
+BehaviorSubject is used in services like EventService to maintain and update a reactive state shared across components.
 
-Lazy Loading: Routes are lazy-loaded and guarded using Angular Router's route-level guards.
+HttpClient calls return Observable streams for all backend interactions (CRUD operations).
 
-Angular Material: Ensures consistency and accessibility with Material UI standards.
+RxJS operators such as:
 
-Responsiveness: Designed to look good across devices using Material Layout and Grid CSS.
+tap – to reflect backend changes in the local state.
+
+map – to transform and validate login response data.
+
+async pipe is used in templates to auto-subscribe and unsubscribe, avoiding memory leaks.
+
+This reactive pattern ensures a seamless user experience and clean data flow without needing any external state management library like NgRx.
+
+✅ Lazy Loading & Route Guards
+Routes are lazy-loaded and protected using Angular Router’s built-in guards for authenticated access.
+
+✅ Angular Material
+Material UI components were used to maintain consistency, accessibility, and responsiveness across the app.
+
+✅ Responsive Layout
+Mobile-first and accessible layout created using Angular Material’s layout system and CSS Flex/Grid.
 
 📄 License
 This is a submission for the Platform Commons assignment and intended for evaluation only. All code is original and written by me.
