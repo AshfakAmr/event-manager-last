@@ -116,7 +116,7 @@ export class EventListComponent implements OnInit {
       this.eventService.deleteEvent(id).subscribe({
         next: () => {
           this.snackBar.open("Event deleted", "Close", { duration: 2000 });
-          this.filterEvents(); // Reapply filters
+          this.filterEvents();
         },
         error: () => {
           this.snackBar.open("Failed to delete event", "Close", {

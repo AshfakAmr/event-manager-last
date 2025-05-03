@@ -12,7 +12,7 @@ import { AuthService } from "../../services/auth.service";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
-import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar"; // ✅ Import
+import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
 
 @Component({
   standalone: true,
@@ -25,7 +25,7 @@ import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar"; //
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatSnackBarModule, // ✅ Add MatSnackBarModule
+    MatSnackBarModule,
   ],
 })
 export class EventFormComponent implements OnInit {
@@ -41,7 +41,7 @@ export class EventFormComponent implements OnInit {
     private router: Router,
     private eventService: EventService,
     private authService: AuthService,
-    private snackBar: MatSnackBar // ✅ Inject MatSnackBar
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -126,7 +126,7 @@ export class EventFormComponent implements OnInit {
         next: () => {
           this.snackBar.open("Event created successfully!", "Close", {
             duration: 3000,
-          }); // ✅ Toast after creation
+          });
           this.redirectToList();
         },
         error: () => this.showError("Error creating event."),

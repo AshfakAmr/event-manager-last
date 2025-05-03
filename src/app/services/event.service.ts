@@ -49,7 +49,6 @@ export class EventService {
       throw new Error("Event not found");
     }
 
-    // Merge existing fields to avoid losing anything
     const mergedUpdate: Event = {
       ...existingEvent,
       ...updated,

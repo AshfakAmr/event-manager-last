@@ -12,7 +12,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
 import { CommonModule } from "@angular/common";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
-import { MatIconModule } from "@angular/material/icon"; // Add this import
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
   selector: "app-login",
@@ -42,10 +42,7 @@ export class LoginComponent {
     private snackBar: MatSnackBar
   ) {
     this.loginForm = this.fb.group({
-      email: [
-        "",
-        [Validators.required, Validators.email], // Email format validation
-      ],
+      email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required, Validators.minLength(8)]],
     });
   }
